@@ -9,7 +9,7 @@ spec:
   source:
     path: helm-chart
     repoURL: https://github.com/momoelabdi/windCatchers.git
-    targetRevision: HEAD
+    targetRevision: main
   sources: []
   project: default
   syncPolicy:
@@ -19,3 +19,4 @@ spec:
     syncOptions:
       - Validate=false
       - PruneLast=true
+
