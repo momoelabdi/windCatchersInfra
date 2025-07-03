@@ -13,7 +13,7 @@ spec:
     helm:
       valueFiles:
         - helm/values-dev.yaml
-      ignoreMissingValueFiles: true
+      # ignoreMissingValueFiles: true
   sources: []
   project: default
   syncPolicy:
