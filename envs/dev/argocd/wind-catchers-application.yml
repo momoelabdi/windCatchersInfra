@@ -6,14 +6,16 @@ spec:
   destination:
     namespace: default
     server: https://kubernetes.default.svc
-    project: default
-  source: 
+  source:
     path: helm-chart
     repoURL: https://github.com/momoelabdi/windCatchers.git
-    targetRevision: main
+    targetRevision: HEAD
     helm:
       valueFiles:
-        - envs/dev/helm/values-dev.yaml
+        - helm/values-dev.yaml
+      ignoreMissingValueFiles: true
+  sources: []
+  project: default
   syncPolicy:
     automated:
       prune: true 
