@@ -6,7 +6,7 @@ spec:
   destination:
     namespace: default
     server: https://kubernetes.default.svc
-  sources:
+  source:
     path: helm-chart
     repoURL: https://github.com/momoelabdi/windCatchers.git
     targetRevision: HEAD
@@ -16,8 +16,7 @@ spec:
   project: default
   syncPolicy:
     automated:
-      prune: true 
+      prune: false
       selfHeal: true
     syncOptions:
-      - Validate=false
-      - PruneLast=true
+      - CreateNamespace=true
