@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-wc-api
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  sources:
+    
+    - repoURL: https://github.com/momoelabdi/windCatchers.git
+      path: helm-chart
+      targetRevision: HEAD
+      helm:
+        valueFiles:
+          - $values/envs/dev/manifest/values-dev.yml
+
+    - repoURL: https://github.com/momoelabdi/windCatchersInfra.git
+      targetRevision: HEAD
+      ref: values 
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

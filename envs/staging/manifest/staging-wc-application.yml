@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: api-dev
+  name: staging-wc-api
 spec:
   destination:
     namespace: default
@@ -13,7 +13,7 @@ spec:
       targetRevision: HEAD
       helm:
         valueFiles:
-          - $values/envs/dev/helm/values-dev.yml
+          - $values/envs/staging/manifest/values-staging.yml
 
     - repoURL: https://github.com/momoelabdi/windCatchersInfra.git
       targetRevision: HEAD
@@ -25,3 +25,5 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+
+
