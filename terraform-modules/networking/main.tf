@@ -54,4 +54,45 @@ resource "aws_subnet" "public" {
   }
 }
 
+# -> public route table rules associations
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.eks_vpc.id
+  tags = {
+    Name = "public-eks-route-table"
+  }
+}
+
+resource "aws_route" "public" {
+  route_table_id         = aws_route_table.public.id
+  gateway_id             = aws_internet_gateway.igw.id
+  destination_cidr_block = "0.0.0.0/0"
+}
+
+resource "aws_route_table_association" "public" {
+  count          = length(aws_subnet.public)
+  subnet_id      = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.public.id
+}
+
+
+# private route table rules associations
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.eks_vpc.id
+  tags = {
+    Name = "private-eks-route-table"
+  }
+}
+
+resource "aws_route" "private" {
+  route_table_id         = aws_route_table.private.id
+  nat_gateway_id         = aws_nat_gateway.ngw.id
+  destination_cidr_block = "0.0.0.0/0"
+}
+
+resource "aws_route_table_association" "private" {
+  count          = length(aws_subnet.private)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
+}
+
 
