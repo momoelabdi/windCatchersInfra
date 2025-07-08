@@ -22,4 +22,8 @@ resource "aws_eks_node_group" "eks_node_group" {
   }
 }
 
-# resource "" "" {}
+# -> oidc provider for loadbalancer service account 
+resource "aws_iam_openid_connect_provider" "oidc" {
+  url = aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
+  client_id_list = ["sts.amazonaws.com"]
+}
