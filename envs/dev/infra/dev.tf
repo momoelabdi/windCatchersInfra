@@ -14,12 +14,12 @@ module "eks" {
 
 module "network" {
   source       = "../../../terraform-modules/networking"
-  cluster_name = var.cluster_name
+  cluster_name = "${var.cluster_name}-${var.environment}"
 }
 
 module "loadbalancer" {
   source       = "../../../terraform-modules/loadbalancer"
-  cluster_name = var.cluster_name
+  cluster_name = "${var.cluster_name}-${var.environment}"
   environment                   = var.environment
   cluster_ca_certificate = module.eks.cluster_ca_certificate
   eks_oidc_provider_arn = module.eks.eks_oidc_provider_arn
