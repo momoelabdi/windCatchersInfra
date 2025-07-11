@@ -34,15 +34,15 @@ module "loadbalancer" {
 
 
 module "database" {
-  source                      = "../../../terraform-modules/database"
-  db_identifier               = var.db_identifier
-  environment                 = var.environment
-  db_instance_class           = var.db_instance_class
-  db_engine_version           = var.db_engine_version
-  db_username                 = var.db_username
-  db_password                 = var.db_password
-  db_name                     = var.db_name
-  db_subnet_ids               = module.network.private_subnets_ids
-  eks_nodes_security_group_id = module.network.eks_nodes_security_group_id
-  vpc_id                      = module.network.eks_vpc_id
+  source                     = "../../../terraform-modules/database"
+  db_identifier              = var.db_identifier
+  environment                = var.environment
+  db_instance_class          = var.db_instance_class
+  db_engine_version          = var.db_engine_version
+  db_username                = var.db_username
+  db_password                = var.db_password
+  db_name                    = var.db_name
+  db_subnet_ids              = module.network.private_subnets_ids
+  private_subnet_cidr_blocks = module.network.private_subnet_cidr_blocks
+  vpc_id                     = module.network.eks_vpc_id
 }

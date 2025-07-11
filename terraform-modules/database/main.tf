@@ -7,23 +7,23 @@ resource "aws_db_instance" "rds" {
   username                = var.db_username
   password                = var.db_password
   db_name                 = var.db_name
-  db_subnet_group_name     = aws_db_subnet_group.rds.name
-  vpc_security_group_ids = [aws_security_group.rds.id]
+  db_subnet_group_name    = aws_db_subnet_group.rds.name
+  vpc_security_group_ids  = [aws_security_group.rds.id]
   parameter_group_name    = aws_db_parameter_group.rds_params.name
   allocated_storage       = 10
   backup_retention_period = 1
-  publicly_accessible       = false
+  publicly_accessible     = false
   skip_final_snapshot     = true
 }
 
 # -> db read replica 
 resource "aws_db_instance" "replica" {
-  replicate_source_db     = aws_db_instance.rds.identifier
-  identifier              = "${var.db_identifier}-${var.environment}-replica"
-  instance_class          = var.db_instance_class
+  replicate_source_db    = aws_db_instance.rds.identifier
+  identifier             = "${var.db_identifier}-${var.environment}-replica"
+  instance_class         = var.db_instance_class
   vpc_security_group_ids = [aws_security_group.rds.id]
-  parameter_group_name    = aws_db_parameter_group.rds_params.name
-  skip_final_snapshot     = true
+  parameter_group_name   = aws_db_parameter_group.rds_params.name
+  skip_final_snapshot    = true
 }
 
 # -> db parans 
@@ -53,7 +53,6 @@ resource "aws_security_group" "rds" {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks       = ["0.0.0.0/0"] # TODO remove & allow eks only !!!
-    # security_groups = [var.eks_nodes_security_group_id]
+    cidr_blocks = var.private_subnet_cidr_blocks
   }
 }
